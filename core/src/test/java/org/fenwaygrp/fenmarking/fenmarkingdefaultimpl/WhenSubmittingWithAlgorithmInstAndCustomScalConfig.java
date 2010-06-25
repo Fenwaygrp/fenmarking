@@ -28,7 +28,7 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
     public static void beforeClass() throws Exception {
         AlgorithmOne.reset();
         AlgorithmTwo.reset();
-        results = fenmarking.submit(new ScalabilityConfiguration(10, 5,100,100), algorithmOne);
+        results = fenmarking.submit(new ScalabilityConfiguration(10, 5, 100, 100), algorithmOne);
     }
     
     @Test
