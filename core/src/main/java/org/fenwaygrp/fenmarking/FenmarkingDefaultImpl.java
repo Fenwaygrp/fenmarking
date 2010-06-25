@@ -104,7 +104,7 @@ public class FenmarkingDefaultImpl implements Fenmarking {
         pool.shutdown();
         try {
             if(!pool.isTerminated()){
-                pool.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);    
+                pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);    
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
