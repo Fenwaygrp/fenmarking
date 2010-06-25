@@ -25,12 +25,4 @@ public class FenmarkingValidationUnitTest {
         }
     }
     
-    @Test
-    public void testname() throws Exception {
-        PerformanceConfiguration pc = new PerformanceConfiguration(null, null, null);
-        fenmarking.submit(pc, new AlgorithmOne());
-    }
-    
-    
-    
 }
