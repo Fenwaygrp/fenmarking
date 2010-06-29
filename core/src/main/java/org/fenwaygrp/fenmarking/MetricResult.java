@@ -19,7 +19,7 @@ public class MetricResult {
 	
     private StatisticCalculator calculator = new StatisticCalculatorDefaultImpl();
 	
-	public MetricResult(List<Long> values) {
+	public MetricResult(List<Long> values, Long totalExecutionTime) {
 		this.arithmeticVelocity = calculator.getArithmeticMean(values);
 		this.geometricVelocity = calculator.getGeometricMean(values);
 		this.harmonicVelocity = calculator.getHarmonicMean(values);
@@ -28,16 +28,14 @@ public class MetricResult {
 		this.modes = calculator.getMode(values);
 		this.median = calculator.getMedian(values);
         
-        this.throughput = calculateThroughPut(values);
+        this.throughput = calculateTps(totalExecutionTime, values.size());
         this.highestValue = calculateHighestValue(values);
 	}
 
-	private BigDecimal calculateThroughPut(List<Long> values){
-	    FenmarkBigDecimal throughPut = new FenmarkBigDecimal(0);
-	    for(Long item : values){
-	        throughPut = throughPut.add(item);
-	    }
-	    return new FenmarkBigDecimal(values.size()).divide(throughPut).toBigDecimal(2, RoundingMode.HALF_EVEN);
+	private BigDecimal calculateTps(Long totalExecutionTime, Integer numberOfTransactions){
+	    FenmarkBigDecimal tps = new FenmarkBigDecimal(totalExecutionTime);
+	    tps = tps.divide(numberOfTransactions);
+	    return tps.toBigDecimal();
 	}
 
 	private BigDecimal calculateHighestValue(List<Long> values){
@@ -50,28 +48,32 @@ public class MetricResult {
 	    return new FenmarkBigDecimal(highestValue).toBigDecimal(2, RoundingMode.HALF_EVEN);
 	}
 	
+	public BigDecimal getMeanDurationPerTransaction(MeanType mean){
+		BigDecimal value = null;
+		if(mean.equals(MeanType.ARITHMETIC)){
+			value = arithmeticVelocity;
+		} else if(mean.equals(MeanType.GEOMETRIC)){
+			value = geometricVelocity;
+		} else if(mean.equals(MeanType.HARMONIC)){
+			value = harmonicVelocity;
+		}
+		return value;
+	}
+	
+	public BigDecimal getMeanStdDevDurationPerTransaction(MeanType mean){
+		BigDecimal value = null;
+		if(mean.equals(MeanType.ARITHMETIC)){
+			value = arithmeticVelocityStdDev;
+		} else if(mean.equals(MeanType.GEOMETRIC)){
+			value = geometricVelocityStdDev;
+		} else if(mean.equals(MeanType.HARMONIC)){
+			throw new UnsupportedOperationException("Standard Deviation for Harmonic mean not available.");
+		}
+		return value;
+	}
+	
 	/*Setter/Getter*/
-    public BigDecimal getArithmeticVelocity() {
-        return arithmeticVelocity;
-    }
-
-    public BigDecimal getGeometricVelocity() {
-        return geometricVelocity;
-    }
-
-    public BigDecimal getHarmonicVelocity() {
-        return harmonicVelocity;
-    }
-
-    public BigDecimal getArithmeticVelocityStdDev() {
-        return arithmeticVelocityStdDev;
-    }
-
-    public BigDecimal getGeometricVelocityStdDev() {
-        return geometricVelocityStdDev;
-    }
-
-    public BigDecimal getThroughput() {
+    public BigDecimal getTransactionsPerSecond() {
         return throughput;
     }
 

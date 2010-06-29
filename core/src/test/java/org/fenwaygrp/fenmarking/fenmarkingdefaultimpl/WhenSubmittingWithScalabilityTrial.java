@@ -83,13 +83,13 @@ public class WhenSubmittingWithScalabilityTrial {
 
     @Test
     public void shouldHaveRunDefaultWarmsForAlgorithmOne() throws Exception {
-        assertThat(AlgorithmOne.warmups, is(trial.getConfiguration().getNumberOfWarmUps()
+        assertThat(AlgorithmOne.warmups.get(), is(trial.getConfiguration().getNumberOfWarmUps()
                 * scalabilityProfile.getPerformanceProfiles().size()));
     }
 
     @Test
     public void shouldHaveRunDefaultExecutionsAlgorithmOne() throws Exception {
-        assertThat(AlgorithmOne.executions, is(trial.getConfiguration().getNumberOfExecutions()
+        assertThat(AlgorithmOne.executions.get(), is(trial.getConfiguration().getNumberOfExecutions()
                 * scalabilityProfile.getPerformanceProfiles().size()));
     }
 
@@ -105,13 +105,13 @@ public class WhenSubmittingWithScalabilityTrial {
     
     @Test
     public void shouldHaveRunDefaultWarmsForAlgorithmTwo() throws Exception {
-        assertThat(AlgorithmTwo.warmups, is(trial.getConfiguration().getNumberOfWarmUps()
+        assertThat(AlgorithmTwo.warmups.get(), is(trial.getConfiguration().getNumberOfWarmUps()
                 * scalabilityProfile.getPerformanceProfiles().size()));
     }
 
     @Test
     public void shouldHaveRunDefaultExecutionsAlgorithmTwo() throws Exception {
-        assertThat(AlgorithmTwo.executions, is(trial.getConfiguration().getNumberOfExecutions()
+        assertThat(AlgorithmTwo.executions.get(), is(trial.getConfiguration().getNumberOfExecutions()
                 * scalabilityProfile.getPerformanceProfiles().size()));
     }
 

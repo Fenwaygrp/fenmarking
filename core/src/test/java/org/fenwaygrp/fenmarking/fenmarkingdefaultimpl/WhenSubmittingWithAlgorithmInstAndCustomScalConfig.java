@@ -22,7 +22,7 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
 
     private static Fenmarking fenmarking = new FenmarkingDefaultImpl();  
     private static List<MetricResult> results; 
-    private static AlgorithmOne algorithmOne = new AlgorithmOne();
+    private static Class<? extends Algorithm> algorithmOne = AlgorithmOne.class;
     
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -33,27 +33,27 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
     
     @Test
     public void shouldHaveRunDefaultNumberWarmUps() throws Exception {
-        assertThat(algorithmOne.warmups, is(100*3));
+        assertThat(AlgorithmOne.warmups.get(), is(100*3));
     }
     
     @Test
     public void shouldHaveRunDefaultNumberExecutions() throws Exception {
-        assertThat(algorithmOne.executions, is(100*3));
+        assertThat(AlgorithmOne.executions.get(), is(100*3));
     }
 
     @Test
     public void shouldHaveConfiguredNumberOfThreads() throws Exception {
-        assertThat(algorithmOne.threadCount.size(), is(16));
+        assertThat(AlgorithmOne.threadCount.size(), is(16));
     }
     
     @Test
     public void shouldHaveCalledSetUp() throws Exception {
-        assertThat(algorithmOne.isSetUpCalled, is(true));
+        assertThat(AlgorithmOne.isSetUpCalled, is(true));
     }
     
     @Test
     public void shouldHaveCalledTearDown() throws Exception {
-        assertThat(algorithmOne.isTearDownCalled, is(true));
+        assertThat(AlgorithmOne.isTearDownCalled, is(true));
     }
     
     @Test
@@ -78,7 +78,7 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
     
     @Test(expected=AssertionError.class)
     public void shouldThrowExceptionOnNullAlgorithm() throws Exception {
-        Algorithm a = null;
+        Class<? extends Algorithm> a = null;
         try {
             fenmarking.submit(a);
         } catch (AssertionError e) {
@@ -89,12 +89,12 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
     
     @Test
     public void shouldHaveRunSetUpWarmUpPlusExecutionRuns() throws Exception {
-        assertThat(AlgorithmOne.setupCount, is(200*3));
+        assertThat(AlgorithmOne.setupCount.get(), is(200*3));
     }
     
     @Test
     public void shouldHaveRunTearDownWarmUpPlusExectionRuns() throws Exception {
-        assertThat(AlgorithmOne.tearDownCount, is(200*3));
+        assertThat(AlgorithmOne.tearDownCount.get(), is(200*3));
     }
 }
 

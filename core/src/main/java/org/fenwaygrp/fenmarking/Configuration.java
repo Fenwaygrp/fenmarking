@@ -23,6 +23,13 @@ public abstract class Configuration {
 	public Configuration() {
     }
 	
+	/**
+	 * 
+	 * @param numberOfWarmUps  This parameters allows you to configure the number of times
+	 * you want to execute the warm up phase.
+	 * @param numberOfExecutions This parameter allows you to configure the number of times
+	 * you want to execute the execution phase.
+	 */
 	public Configuration(Integer numberOfWarmUps, Integer numberOfExecutions) {
 	    MatcherAssert.assertThat(numberOfWarmUps,notNullValue());
 	    MatcherAssert.assertThat(numberOfExecutions,notNullValue());

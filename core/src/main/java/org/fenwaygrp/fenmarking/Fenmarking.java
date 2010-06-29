@@ -16,7 +16,7 @@ public interface Fenmarking {
      * @param algorithm the algorithm to benchmark
      * @return the results of the benchmarking.
      */
-    MetricResult submit(Algorithm algorithm);
+    MetricResult submit(Class<? extends Algorithm> clazz);
 
     /**
      * Use this method to pass an instance of the algorithm you want to micro benchmark and
@@ -25,7 +25,7 @@ public interface Fenmarking {
      * @param algorithm
      * @return
      */
-    MetricResult submit(PerformanceConfiguration configuration, Algorithm algorithm);
+    MetricResult submit(PerformanceConfiguration configuration, Class<? extends Algorithm> clazz);
 
     /**
      * This method allows you to pass a algorithm instance and a custom scalability
@@ -34,7 +34,7 @@ public interface Fenmarking {
      * @param algorithm
      * @return
      */
-    List<MetricResult> submit(ScalabilityConfiguration configuration, Algorithm algorithm);
+    List<MetricResult> submit(ScalabilityConfiguration configuration, Class<? extends Algorithm> clazz);
 
     /**
      * 

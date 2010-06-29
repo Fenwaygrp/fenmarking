@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import org.fenwaygrp.fenmarking.MeanType;
 import org.fenwaygrp.fenmarking.MetricResult;
 import org.junit.Test;
 
@@ -27,27 +28,27 @@ public class MetricResultAssertions {
     
     @Test
     public void shouldHaveNotNullArithmeticValue() throws Exception {
-        assertThat(result.getArithmeticVelocity(), notNullValue());
+        assertThat(result.getMeanDurationPerTransaction(MeanType.ARITHMETIC), notNullValue());
     }
 
     @Test
     public void shouldHaveNotNullArithmeticStdDevValue() throws Exception {
-        assertThat(result.getArithmeticVelocityStdDev(), notNullValue());
+        assertThat(result.getMeanStdDevDurationPerTransaction(MeanType.ARITHMETIC), notNullValue());
     }
 
     @Test
     public void shouldHaveNotNullGeometricValue() throws Exception {
-        assertThat(result.getGeometricVelocity(), notNullValue());
+        assertThat(result.getMeanDurationPerTransaction(MeanType.GEOMETRIC), notNullValue());
     }
  
     @Test
     public void shouldHaveNotNullGeometricStdDev() throws Exception {
-        assertThat(result.getGeometricVelocityStdDev(), notNullValue());
+        assertThat(result.getMeanStdDevDurationPerTransaction(MeanType.GEOMETRIC), notNullValue());
     }
     
     @Test
     public void shouldHaveNotNullHarmonic() throws Exception {
-        assertThat(result.getHarmonicVelocity(), notNullValue());
+        assertThat(result.getMeanDurationPerTransaction(MeanType.HARMONIC), notNullValue());
     }
     
     @Test
@@ -68,7 +69,7 @@ public class MetricResultAssertions {
     
     @Test
     public void shouldHaveNotNullThroughput() throws Exception {
-        assertThat(result.getThroughput(), notNullValue());
+        assertThat(result.getTransactionsPerSecond(), notNullValue());
     }
     
     

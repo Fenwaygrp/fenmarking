@@ -11,6 +11,7 @@ import java.util.List;
 import org.fenwaygrp.fenmarking.Algorithm;
 import org.fenwaygrp.fenmarking.Fenmarking;
 import org.fenwaygrp.fenmarking.FenmarkingDefaultImpl;
+import org.fenwaygrp.fenmarking.MeanType;
 import org.fenwaygrp.fenmarking.MetricResult;
 import org.fenwaygrp.fenmarking.PerformanceConfiguration;
 import org.junit.BeforeClass;
@@ -33,12 +34,12 @@ public class WhenSubmittingWithListOfAlgorithmClassesAndCustomPerfConfig {
     /*Assertions for Algorithm One*/
     @Test
     public void shouldRunConfiguredExecutionsForAlgorithmOne() throws Exception {
-        assertThat(AlgorithmOne.executions, is(200));
+        assertThat(AlgorithmOne.executions.get(), is(200));
     }
 
     @Test
     public void shouldRunConfiguredWarmUpsForAlgorithmOne() throws Exception {
-        assertThat(AlgorithmOne.executions, is(200));
+        assertThat(AlgorithmOne.executions.get(), is(200));
     }
 
     @Test
@@ -60,12 +61,12 @@ public class WhenSubmittingWithListOfAlgorithmClassesAndCustomPerfConfig {
     /*Assertions for Algorithm Two*/
     @Test
     public void shouldRunConfiguredExecutionsForAlgorithmTwo() throws Exception {
-        assertThat(AlgorithmTwo.executions, is(200));
+        assertThat(AlgorithmTwo.executions.get(), is(200));
     }
 
     @Test
     public void shouldRunConfiguredWarmUpsForAlgorithmTwo() throws Exception {
-        assertThat(AlgorithmTwo.executions, is(200));
+        assertThat(AlgorithmTwo.executions.get(), is(200));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class WhenSubmittingWithListOfAlgorithmClassesAndCustomPerfConfig {
     
     @Test
     public void shouldAssertAlgorithmOneIsFasterThanAlgorithmTwo() throws Exception {
-        assertThat(results.get(0).getArithmeticVelocity(), is(lessThan(results.get(1).getArithmeticVelocity())));
+        assertThat(results.get(0).getMeanDurationPerTransaction(MeanType.ARITHMETIC), is(lessThan(results.get(1).getMeanDurationPerTransaction(MeanType.ARITHMETIC))));
     }
 
     @Test(expected=AssertionError.class)

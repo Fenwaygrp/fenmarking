@@ -16,7 +16,7 @@ public class FenmarkingValidationUnitTest {
     
     @Test(expected=AssertionError.class)
     public void testAlogrithmIsRequiredWhenSubmittingSingleAlgorithm() throws Exception {
-        Algorithm a = null;
+        Class<? extends Algorithm> a = null;
         try {
             fenmarking.submit(a);
         } catch (AssertionError e) {

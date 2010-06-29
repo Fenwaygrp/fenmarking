@@ -81,6 +81,10 @@ class FenmarkBigDecimal {
         return target.setScale(scale, roundingMode);
     }
 
+    public BigDecimal toDefaultBigDecimal() {
+        return target.setScale(scale, rmode);
+    }
+
     public double doubleValue() {
         return target.doubleValue();
     }

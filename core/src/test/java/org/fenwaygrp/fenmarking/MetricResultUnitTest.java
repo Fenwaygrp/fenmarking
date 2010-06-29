@@ -16,34 +16,40 @@ public class MetricResultUnitTest {
     
     @Before
     public void before(){
-        metricResult = new MetricResult(Arrays.asList(0L,25L,50L,75L,100L));
+        metricResult = new MetricResult(Arrays.asList(0L,25L,50L,75L,100L),1000L);
     }
     
     @Test
     public void testArithmeticVelocityIsNotNull() throws Exception {
-        assertThat(metricResult.getArithmeticVelocity(), notNullValue());
+        assertThat(metricResult.getMeanDurationPerTransaction(MeanType.ARITHMETIC), notNullValue());
     }
     
     @Test
     public void testGeometricVelocityIsNotNull() throws Exception {
-        assertThat(metricResult.getGeometricVelocity(), notNullValue());
+        assertThat(metricResult.getMeanDurationPerTransaction(MeanType.GEOMETRIC), notNullValue());
     }
     
     @Test
     public void testHarmonicVelocityIsNotNull() throws Exception {
-        assertThat(metricResult.getHarmonicVelocity(), notNullValue());
+        assertThat(metricResult.getMeanDurationPerTransaction(MeanType.HARMONIC), notNullValue());
     }
     
     @Test
     public void testArithmeticVelocityStdDevIsNotNull() throws Exception {
-        assertThat(metricResult.getArithmeticVelocityStdDev(), notNullValue());
+        assertThat(metricResult.getMeanStdDevDurationPerTransaction(MeanType.ARITHMETIC), notNullValue());
     }
     
     @Test
     public void testGeometricVelocityStdDevIsNotNull() throws Exception {
-        assertThat(metricResult.getGeometricVelocityStdDev(), notNullValue());
+        assertThat(metricResult.getMeanStdDevDurationPerTransaction(MeanType.GEOMETRIC), notNullValue());
     }
 
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void testHarmonicVelocityStdDevThrowsException() throws Exception {
+        metricResult.getMeanStdDevDurationPerTransaction(MeanType.HARMONIC);
+    }
+    
     @Test
     public void testModeListIsNotNull() throws Exception {
         assertThat(metricResult.getModes(), notNullValue());
@@ -60,7 +66,7 @@ public class MetricResultUnitTest {
     }
 
     public void testThroughPut() throws Exception {
-        assertThat(metricResult.getThroughput(), is(new BigDecimal("25")));
+        assertThat(metricResult.getTransactionsPerSecond(), is(new BigDecimal("25")));
     }
     
 }
