@@ -26,37 +26,32 @@ import java.util.List;
 public interface Fenmarking {
 
     /**
-     * Use this method to pass a instance of the algorithm that you want to micro benchmark.
-     * The instance will be reused and the Default PerformanceConfiguration will be applied.
-     * @param algorithm the algorithm to benchmark
+     * This method allows you to specific a single algorithm to benchmark. 
+     * The framework uses the default configuration.
+     * @param clazz The class which encapsulates the algorithm under test. 
      * @return the results of the benchmarking.
      */
     MetricResult submit(Class<? extends Algorithm> clazz);
 
     /**
-     * Use this method to pass an instance of the algorithm you want to micro benchmark and
-     * a custom configuration to apply.
-     * @param configuration
-     * @param algorithm
+     * This method allows you to specific a single algorithm to benchmark and additionally
+     * supply a custom configuration to apply.
+     * @param configuration the configuration to apply to the benchmarking
+     * @param clazz The class which encapsulates the algorithm under test. 
      * @return
      */
     MetricResult submit(PerformanceConfiguration configuration, Class<? extends Algorithm> clazz);
 
     /**
-     * This method allows you to pass a algorithm instance and a custom scalability
+     * This method allows you to specify a single algorithm to benchmark and additionally 
+     * supply a custom scalability configuration.
      * configuration.
-     * @param configuration
-     * @param algorithm
+     * @param configuration The configuration to apply to the benchmarking
+     * @param clazz The class which encapsulates the algorithm under test.
      * @return
      */
     List<MetricResult> submit(ScalabilityConfiguration configuration, Class<? extends Algorithm> clazz);
 
-    /**
-     * 
-     * @param configuration
-     * @param clazzez
-     * @return
-     */
     List<MetricResult> submit(PerformanceConfiguration configuration,
             List<Class<? extends Algorithm>> clazzez);
 

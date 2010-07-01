@@ -15,6 +15,12 @@
  */
 package org.fenwaygrp.fenmarking;
 
+/**
+ * This enum encapsulates the various means that are available for computation.
+ * 
+ * @author Saad Khawaja
+ *
+ */
 public enum MeanType {
 
 	ARITHMETIC,

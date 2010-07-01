@@ -34,7 +34,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.hamcrest.MatcherAssert;
-
+/**
+ * This is the default implementation for the Fenmarking interface.
+ * @author Saad Khawaja
+ *
+ */
 public class FenmarkingDefaultImpl implements Fenmarking {
 
     @SuppressWarnings("unchecked")
@@ -64,8 +68,8 @@ public class FenmarkingDefaultImpl implements Fenmarking {
             Class<? extends Algorithm> clazz) {
         List<MetricResult> results = new ArrayList<MetricResult>();
         PerformanceConfiguration perfConfig = new PerformanceConfiguration(configuration);
-        results.add(submitInternal(perfConfig, clazz, new HashMap()));
-        for (int i = configuration.getIncrementBy(); i <= configuration.getMaxThreads(); i = i
+        //results.add(submitInternal(perfConfig, clazz, new HashMap()));
+        for (int i = configuration.getMinThreads(); i <= configuration.getMaxThreads(); i = i
                 + configuration.getIncrementBy()) {
             perfConfig.setNumberOfThreads(i);
             results.add(submitInternal(perfConfig, clazz, new HashMap()));
@@ -107,54 +111,10 @@ public class FenmarkingDefaultImpl implements Fenmarking {
             testData = new HashMap();
         }
 
-        // Execute the warmup in threads
-        // ExecutorService pool =
-        // Executors.newFixedThreadPool(configuration.getNumberOfThreads());
-        // for (int i = 0; i < configuration.getNumberOfWarmUps(); i++) {
-        // pool.submit(new WarmUpRunnable(clazz, testData));
-        // }
-        // pool.shutdown();
-        // try {
-        // pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
-        // } catch (InterruptedException e) {
-        // throw new RuntimeException(e);
-        // }
-
         executeWarmUps(configuration, clazz, testData);
 
-        // Execute the executions in threads
         List<Long> times = Collections.synchronizedList(new ArrayList<Long>());
-        // List<Future> futures = new ArrayList<Future>();
-        // pool =
-        // Executors.newFixedThreadPool(configuration.getNumberOfThreads());
         Long start = System.currentTimeMillis();
-        // for (int i = 0; i < configuration.getNumberOfExecutions(); i++) {
-        // futures.add(pool.submit(new ExecutionRunnable(times, clazz,
-        // testData)));
-        // }
-        //        
-        // Iterator<Future> iterator = futures.iterator();
-        // while(iterator.hasNext()){
-        // Future future = iterator.next();
-        // if(future.isDone()){
-        // iterator.remove();
-        // } else {
-        // try {
-        // future.get(100, TimeUnit.MILLISECONDS);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // throw new RuntimeException();
-        // }
-        // }
-        // }
-        //        
-        // pool.shutdown();
-        // try {
-        // pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
-        // } catch (InterruptedException e) {
-        // throw new RuntimeException(e);
-        // }
-
         executeExecutions(configuration, clazz, testData, times);
         Long end = System.currentTimeMillis();
 

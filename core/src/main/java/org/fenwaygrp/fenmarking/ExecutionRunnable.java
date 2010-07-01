@@ -18,7 +18,13 @@ package org.fenwaygrp.fenmarking;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * This is a non public class for internal user. This class is used by the 
+ * framework to perform the actual execution in a thread and collect times
+ * around the execution.
+ * @author Saad Khawaja
+ *
+ */
 class ExecutionRunnable extends AbstractRunnable {
 
     private List<Long> times;

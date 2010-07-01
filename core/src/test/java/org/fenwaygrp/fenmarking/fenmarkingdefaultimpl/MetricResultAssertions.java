@@ -68,7 +68,7 @@ public class MetricResultAssertions {
     
     @Test
     public void shouldHaveNotNullHighestValue() throws Exception {
-        assertThat(result.getHighestValue(), notNullValue());
+        assertThat(result.getMaxValue(), notNullValue());
     }
     
     @Test

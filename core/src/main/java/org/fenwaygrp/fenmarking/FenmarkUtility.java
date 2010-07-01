@@ -15,6 +15,13 @@
  */
 package org.fenwaygrp.fenmarking;
 
+/**
+ * This is a non public class, for internal use by the framework. This is a utility
+ * class and contains helper methods.
+ * 
+ * @author Saad Khawaja
+ *
+ */
 class FenmarkUtility {
 
     public Algorithm newInstance(Class<? extends Algorithm> clazz) { 

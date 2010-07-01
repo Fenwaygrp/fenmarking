@@ -1,0 +1,78 @@
+Welcome to the fenmarking wiki!
+
+{toc}
+
+h1. Introduction
+
+Fenmarking is an open source micro benchmarking framework.
+
+h1. Quick Start Guide
+
+This is a quick start guide, it provides a step by step instruction on what you need to get started.  Please note the code examples are just for reference they have not been verified or compiled. Javadocs are also available.
+
+First lets create a Algorithm class that will encapsulate the algorithm we want to test.
+
+<script src="http://gist.github.com/459020.js?file=QuickStartAlgorithmExample.java"></script>
+
+Next lets create a unit test so that we can run some benchmarking.
+<script src="http://gist.github.com/459132.js?file=QuickStartBenchmarkingUnitTextExample.java"></script>
+
+h1. Reference Guide
+
+h2. Algorithm
+
+The Algorithm interface allows the user to specify and encapsulate the algorithm under test. The Algorithm interface also defines the methods that the fenmarking framework uses as a part of its Phase and lifecycle operations.  The Algorithm interface defines two phases the WarmUp and Execution Phase. Each phase has a life cycle as follows SetUp, WarmUp/Execution, TearDown.  The fenmarking framework first runs the WarmUp phase and then runs the Execution Phase.  The WarmUp and Execution phase are run according to the specification in the Performance/Scalability Configuration.
+
+h2. Configuration
+
+The configuration specification allows you to specify to the fenmarking framework how it should run the benchmarking.  There are two types of configurations the Performance and Scalability.  The common properties to both defined in the Configuartion class and are as follows:
+
+* numberOfWarmUps: This specifies to the framework how many times the warmup phase should be iterated over.  The default value is 2000.
+* numberOfExecutions: This specifies to the framework how many times the exectuion phase should be iterated over. The defualt value is 1000.
+
+You will find resources on the internet that will tell you what are good numbers for warmup, of the resources that we read said a value from 1500 to 2000 will sufficiently warm up the jvm. 
+
+h3. Performance Configuration
+
+The PerformanceConfiguration specifies parameter for configuring concurrent threads. 
+
+* numberOfThreads: This tells the fenmarking framework how many concurrent threads to use to invoke the algorithm.  The default value is 1.  
+
+Things get more interesting when you test with concurrent threads. 
+
+h3. Scalability Configuration
+
+The ScalabilityConfiguration specifies the min and max threads and the increment count.  This will allow you to test the algorithm at different concurrent threads in one configuration.  The parameters available are:
+
+* minThreads: This is the min threads to start with, the default is one.
+* maxThreads: This is the max threads upto which the framework will execute the algorithm with. The default is one.
+* incrementBy: This is the increment count, where the fenmarking framework increments from minThreads to the maxThreads by the value in incrementBy.
+
+For example you have @minThreads=10@, @maxThreads=30@ and @incrementBy=10@  then the runs performed by the framework will be at threads of 10, 20, and 30. The minThreads and maxThreads are inclusive.
+
+h2. MetricResult
+
+The MetricResult class provides you with statistical data on the benchmarking.  All computations are performed using BigDecimal with a scale of 6 and RoundingMode of Half-Even and the results are scaled down to 2. 
+
+The information available is from the MetricResult class is as follows.
+
+
+* Mean Duration per Transaction via the method @BigDecimal getMeanDurationPerTransaction(MeanType mean)@.  This method returns how long it takes on the average to process a single transaction.  Duration is in milliseconds and single transaction is defined as the amount of work done by a single call to the Algorithm.execution() method.  The types of mean that are available are Arithmetic, Geometric and Harmonic.  You can find more information about the types of mean on the internet. 
+
+* Standard Deviation for the Mean Duration per Transaction via the method @BigDecimal getMeanStdDevDurationPerTransaction(MeanType mean)@. This method returns the standard deviation for a specified mean.  Please note that standard for Harmonic Mean is not available.
+
+* Transactions per Second via the method @BigDecimal getTransactionsPerSecond()@.  This method returns how many transactions were processed in one second.  Note: The tps actually includes the times for the whole Execution life cycle.  Which means it includes the time of the setUp and tearDown.  Why? Because when you have concurrent threads each transaction may take X milliseconds, but the total time for all the transactions processed will be less than the sum of all X.  Therefore the framework can not simple sum up all X's and divide the #ofTrans by that sum.  Instead the framework will need to start the clock prior to the processing all the execution phases and stop    
+
+* Max Value via the method @BigDecimal getMaxValue()@.  This method returns the highest value of the data set, which is the transaction that took the longest time.  The returned value is in milliseconds.
+
+* Min Value via the method @BigDecimal getMinValue()@.  This is the min value of the data set, which is the value of the transaction that took the least time.  The returned value is in milliseconds.
+
+
+
+
+h1. Contribute
+
+Please send us a message as we are looking for help. 
+
+
+

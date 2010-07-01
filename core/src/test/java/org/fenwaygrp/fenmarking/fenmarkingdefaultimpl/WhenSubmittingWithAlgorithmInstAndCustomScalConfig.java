@@ -43,7 +43,7 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
     public static void beforeClass() throws Exception {
         AlgorithmOne.reset();
         AlgorithmTwo.reset();
-        results = fenmarking.submit(new ScalabilityConfiguration(10, 5, 100, 100), algorithmOne);
+        results = fenmarking.submit(new ScalabilityConfiguration(1, 9, 4, 100, 100), algorithmOne);
     }
     
     @Test
@@ -58,7 +58,7 @@ public class WhenSubmittingWithAlgorithmInstAndCustomScalConfig {
 
     @Test
     public void shouldHaveConfiguredNumberOfThreads() throws Exception {
-        assertThat(AlgorithmOne.threadCount.size(), is(16));
+        assertThat(AlgorithmOne.threadCount.size(), is(15));
     }
     
     @Test

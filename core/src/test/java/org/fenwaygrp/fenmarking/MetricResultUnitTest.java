@@ -77,7 +77,7 @@ public class MetricResultUnitTest {
     
     @Test
     public void testHighestValue() throws Exception {
-        assertThat(metricResult.getHighestValue(), is(new BigDecimal("100.00")));
+        assertThat(metricResult.getMaxValue(), is(new BigDecimal("100.00")));
     }
 
     public void testThroughPut() throws Exception {

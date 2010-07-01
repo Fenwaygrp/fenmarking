@@ -19,6 +19,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+/**
+ * This class contains the results and statistical data computed from the
+ * timing data collected.  The client can not create a instance of this class.
+ * 
+ * @author Saad Khawaja
+ *
+ */
 public class MetricResult {
 
 	private BigDecimal arithmeticVelocity;
@@ -31,20 +38,23 @@ public class MetricResult {
     private BigDecimal median;
     private List<Long> modes;
     private BigDecimal highestValue;
+    private BigDecimal minValue;
+    
 	
     private StatisticCalculator calculator = new StatisticCalculatorDefaultImpl();
 	
-	public MetricResult(List<Long> values, Long totalExecutionTime) {
-		this.arithmeticVelocity = calculator.getArithmeticMean(values);
-		this.geometricVelocity = calculator.getGeometricMean(values);
-		this.harmonicVelocity = calculator.getHarmonicMean(values);
-		this.arithmeticVelocityStdDev = calculator.getArithmeticMeanStdDev(values);
-        this.geometricVelocityStdDev = calculator.getGeometricMeanStdDev(values);
-		this.modes = calculator.getMode(values);
-		this.median = calculator.getMedian(values);
+	protected MetricResult(List<Long> values, Long totalExecutionTime) {
+		arithmeticVelocity = calculator.getArithmeticMean(values);
+		geometricVelocity = calculator.getGeometricMean(values);
+		harmonicVelocity = calculator.getHarmonicMean(values);
+		arithmeticVelocityStdDev = calculator.getArithmeticMeanStdDev(values);
+        geometricVelocityStdDev = calculator.getGeometricMeanStdDev(values);
+		modes = calculator.getMode(values);
+		median = calculator.getMedian(values);
         
-        this.throughput = calculateTps(totalExecutionTime, values.size());
-        this.highestValue = calculateHighestValue(values);
+        throughput = calculateTps(totalExecutionTime, values.size());
+        highestValue = calculateHighestValue(values);
+        minValue = calculateMinValue(values);
 	}
 
 	private BigDecimal calculateTps(Long totalExecutionTime, Integer numberOfTransactions){
@@ -63,6 +73,25 @@ public class MetricResult {
 	    return new FenmarkBigDecimal(highestValue).toBigDecimal(2, RoundingMode.HALF_EVEN);
 	}
 	
+	private BigDecimal calculateMinValue(List<Long> values){
+        Long minValue = 0L;
+        for(Long item : values){
+            if(item < minValue){
+                minValue = item;
+            }
+        }
+        return new FenmarkBigDecimal(minValue).toBigDecimal(2, RoundingMode.HALF_EVEN);
+	    
+	}
+	
+	/**
+	 * This method returns the mean/average duration per transaction. Duration is
+	 * in milliseconds.  Transaction is defined as the amount of work done in 
+	 * Algorithm.execution() method. 
+	 * 
+	 * @param mean specify the enum type for which you want the mean computation
+	 * @return big decimal representation of the computation.
+	 */
 	public BigDecimal getMeanDurationPerTransaction(MeanType mean){
 		BigDecimal value = null;
 		if(mean.equals(MeanType.ARITHMETIC)){
@@ -75,6 +104,14 @@ public class MetricResult {
 		return value;
 	}
 	
+	/**
+	 * This method returns the standard deviation for the specified mean. Currently
+	 * the standard deviation for harmonic mean is not available.
+	 *  
+	 * @param mean specify the enum type for which you want the standard
+	 * deviation.
+	 * @return  big decimal representation of the standard deviation
+	 */
 	public BigDecimal getMeanStdDevDurationPerTransaction(MeanType mean){
 		BigDecimal value = null;
 		if(mean.equals(MeanType.ARITHMETIC)){
@@ -87,8 +124,14 @@ public class MetricResult {
 		return value;
 	}
 	
-	/*Setter/Getter*/
-    public BigDecimal getTransactionsPerSecond() {
+    /**
+     * This method returns the number of transactions processed in one second.
+     * Transaction is defined as the amount of work done in Algorithm.execution()
+     * method.
+     * 
+     * @return big decimal representation for the value.
+     */
+	public BigDecimal getTransactionsPerSecond() {
         return throughput;
     }
 
@@ -100,12 +143,16 @@ public class MetricResult {
         return modes;
     }
 
-    public BigDecimal getHighestValue() {
+    public BigDecimal getMaxValue() {
         return highestValue;
     }
-
+    
     public StatisticCalculator getCalculator() {
         return calculator;
+    }
+
+    public BigDecimal getMinValue() {
+        return minValue;
     }
 
 }

@@ -18,7 +18,13 @@ package org.fenwaygrp.fenmarking;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
+/**
+ * This is a non public class for internal use by the framework. This class uses the Adapter
+ * pattern to wrap the java.math.BigDecimal.  This adapter encapsulates configuration parameters
+ * such as the scale, rounding mode.
+ * @author Saad Khawaja
+ *
+ */
 class FenmarkBigDecimal {
 
     private static final int scale = 6;

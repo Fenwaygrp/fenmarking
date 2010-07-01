@@ -61,7 +61,7 @@ public abstract class Configuration {
 
 	/**
 	 * This is the number of times the micro benchmark framework will 
-	 * repeat the warm up phase.
+	 * iterate over the warm up phase.
 	 * @param numberOfWarmUp default is 2000
 	 */
 	protected void setNumberOfWarmUps(Integer numberOfWarmUp) {
@@ -73,8 +73,8 @@ public abstract class Configuration {
 	}
 
 	/**
-	 * This is the number of times the micro benchmark framework will repeat the 
-	 * execution phase.
+	 * This is the number of times the micro benchmark framework will 
+	 * iterate over the execution phase.
 	 * @param numberOfExecutions default is 1000
 	 */
 	protected void setNumberOfExecutions(Integer numberOfExecutions) {

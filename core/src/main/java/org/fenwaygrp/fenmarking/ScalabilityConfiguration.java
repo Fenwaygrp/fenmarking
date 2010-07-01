@@ -15,8 +15,20 @@
  */
 package org.fenwaygrp.fenmarking;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+/**
+ * The scalability configuration allows you to configure a run where you
+ * can specify a max thread and increment step count. This configuration
+ * returns a list of results for each thread count.
+ * 
+ * @author Saad Khawaja
+ */
 public class ScalabilityConfiguration extends Configuration {
 
+    private Integer minThreads=1;
     private Integer maxThreads=1;
     private Integer incrementBy=1;
     
@@ -33,6 +45,21 @@ public class ScalabilityConfiguration extends Configuration {
         this.maxThreads = maxThreads;
         this.incrementBy = incrementBy;
     }
+
+    public ScalabilityConfiguration(Integer minThreads, Integer maxThreads, Integer incrementBy) {
+        assertThat(minThreads, is(greaterThan(0)));
+        this.minThreads = minThreads;
+        this.maxThreads = maxThreads;
+        this.incrementBy = incrementBy;
+    }
+    public ScalabilityConfiguration(Integer minThreads, Integer maxThreads, Integer incrementBy, Integer numberOfWarmUps, Integer numberOfExecutions) {
+        super(numberOfWarmUps, numberOfExecutions);
+        assertThat(minThreads, is(greaterThan(0)));
+        this.minThreads = minThreads;
+        this.maxThreads = maxThreads;
+        this.incrementBy = incrementBy;
+    }
+
     
     public Integer getMaxThreads() {
         return maxThreads;
@@ -45,6 +72,15 @@ public class ScalabilityConfiguration extends Configuration {
     }
     public void setIncrementBy(Integer incrementBy) {
         this.incrementBy = incrementBy;
+    }
+
+    public Integer getMinThreads() {
+        return minThreads;
+    }
+
+    public void setMinThreads(Integer minThreads) {
+        assertThat(minThreads, is(greaterThan(0)));
+        this.minThreads = minThreads;
     }
     
 

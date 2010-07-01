@@ -19,7 +19,12 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import org.hamcrest.MatcherAssert;
 
-
+/**
+ * The PerformanceConfiguration additionally allows the user to configure
+ * how many concurrent thread to use to execute the algorithm.  
+ * @author Saad Khawaja
+ *
+ */
 public class PerformanceConfiguration extends Configuration {
 
     private Integer numberOfThreads = 1;
@@ -27,6 +32,12 @@ public class PerformanceConfiguration extends Configuration {
     public PerformanceConfiguration() {
     }
 
+    
+    
+    /**
+     * This constructor only copies the properties in the base configuration
+     * @param configuration
+     */
     public PerformanceConfiguration(Configuration configuration) {
         super(configuration.getNumberOfWarmUps(), configuration.getNumberOfExecutions());
     }
@@ -38,14 +49,22 @@ public class PerformanceConfiguration extends Configuration {
         this.numberOfThreads = numberOfThreads;
     }
 
-    public PerformanceConfiguration(PerformanceConfiguration config) {
-        this(config.getNumberOfWarmUps(), config.getNumberOfExecutions(), config.getNumberOfThreads());
+    public PerformanceConfiguration(Integer numberOfThreads) {
+        super();
+        MatcherAssert.assertThat(numberOfThreads, notNullValue());
+        this.numberOfThreads = numberOfThreads;
     }
+
     
     public Integer getNumberOfThreads() {
         return numberOfThreads;
     }
 
+    /**
+     * This allows the user to set the number of concurrent thread to use to execute the
+     * algorithm under tests.
+     * @param numberOfThreads
+     */
     protected void setNumberOfThreads(Integer numberOfThreads) {
         this.numberOfThreads = numberOfThreads;
     }
