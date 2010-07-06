@@ -18,7 +18,7 @@ package org.fenwaygrp.fenmarking;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-
+import org.junit.Assert;
 /**
  * The scalability configuration allows you to configure a run where you
  * can specify a max thread and increment step count. This configuration
@@ -47,7 +47,7 @@ public class ScalabilityConfiguration extends Configuration {
     }
 
     public ScalabilityConfiguration(Integer minThreads, Integer maxThreads, Integer incrementBy) {
-        assertThat(minThreads, is(greaterThan(0)));
+    	assertThat(minThreads, is(greaterThan(0)));
         this.minThreads = minThreads;
         this.maxThreads = maxThreads;
         this.incrementBy = incrementBy;
@@ -79,11 +79,8 @@ public class ScalabilityConfiguration extends Configuration {
     }
 
     public void setMinThreads(Integer minThreads) {
-        assertThat(minThreads, is(greaterThan(0)));
+    	assertThat(minThreads, is(greaterThan(0)));
         this.minThreads = minThreads;
     }
-    
-
-    
     
 }
